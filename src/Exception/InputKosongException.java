@@ -8,7 +8,7 @@ package Exception;
  *
  * @author Msi Modern 14
  */
-public class InputKosongException {
+public class InputKosongException extends Exception {
     public String message(){
         return "Input Tidak Boleh Kosong [!]";
     }

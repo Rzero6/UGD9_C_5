@@ -22,11 +22,18 @@ public class kendaraanDAO {
     
     public void insertKendaraan(Kendaraan k){
         con = dbCon.makeConnection();
-        String sql = "INSERT INTO kendaraan(id, merk, jenis, tahunPembuatan, noPlat, jumlah_penumpang, jenis_tak) "
+        String sql;
+        if(k.getJenis().equalsIgnoreCase("mobil")){
+            sql = "INSERT INTO kendaraan(id, merk, jenis, tahunPembuatan, noPlat, jumlah_penumpang, jenis_tak) "
                     + "VALUES ('" + k.getId() + "', '" + k.getMerk() + "', '"
                     + k.getJenis() + "', '" + k.getTahunPembuatan() + "', '"
-                    + k.getNoPlat() + "', '" + k.getJumlah_penumpang() + "', '" +k.getJenis_tak()+"')";
-        
+                    + k.getNoPlat() + "', '" + k.getJumlah_penumpang() + "', NULL)";
+        }else{
+            sql = "INSERT INTO kendaraan(id, merk, jenis, tahunPembuatan, noPlat, jumlah_penumpang, jenis_tak) "
+                    + "VALUES ('" + k.getId() + "', '" + k.getMerk() + "', '"
+                    + k.getJenis() + "', '" + k.getTahunPembuatan() + "', '"
+                    + k.getNoPlat() + "', 0, '" +k.getJenis_tak()+"')";
+        }
         System.out.println("Adding Kendaraan...");
         
         try{
@@ -42,10 +49,10 @@ public class kendaraanDAO {
     
     public List<Kendaraan> showKendaraan(String jenis){
         con = dbCon.makeConnection();
-
-        String sql = "SELECT * FROM kendaraan";
+        String sql = "SELECT * FROM kendaraan WHERE jenis = '"+jenis+"'";
+        
         System.out.println("Mengambil data kendaraan...");
-
+        
         List<Kendaraan> list = new ArrayList();
 
         try{
@@ -60,7 +67,7 @@ public class kendaraanDAO {
                             rs.getString("jenis"),
                             rs.getInt("tahunPembuatan"),
                             rs.getString("noPlat"),
-                            rs.getInt("jumlahPenumpang"),
+                            rs.getInt("jumlah_penumpang"),
                             rs.getString("jenis_tak")
                     );
                     list.add(k);
@@ -99,7 +106,7 @@ public class kendaraanDAO {
                             rs.getString("jenis"),
                             rs.getInt("tahunPembuatan"),
                             rs.getString("noPlat"),
-                            rs.getInt("jumlahPenumpang"),
+                            rs.getInt("jumlah_penumpang"),
                             rs.getString("jenis_tak"));
                 }
             }
@@ -122,7 +129,7 @@ public class kendaraanDAO {
         if(id.contains("MBL-")){
            sql = "UPDATE kendaraan SET merk = '" + k.getMerk()+ "', "
                 + "tahunPembuatan = '" + k.getTahunPembuatan() + "', "
-                + "jumlahPenumpang = '" + k.getJumlah_penumpang() + "', "
+                + "jumlah_penumpang = '" + k.getJumlah_penumpang() + "', "
                 + "noPlat = '" + k.getNoPlat() + "' "
                 + "WHERE id = '" + id + "'"; 
         }else{

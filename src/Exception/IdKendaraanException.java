@@ -8,7 +8,7 @@ package Exception;
  *
  * @author Msi Modern 14
  */
-public class IdKendaraanException {
+public class IdKendaraanException extends Exception {
     public String message(){
         return "ID Kendaraan Harus Terdiri Dari 5-8 Karakter [!]";
     }

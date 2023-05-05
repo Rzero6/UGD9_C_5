@@ -58,17 +58,17 @@ public class Kendaraan {
     
     public String showData(String jenis){
         if(jenis.equalsIgnoreCase("mobil")){
-            return  "\nID\t : "+this.id +
-                "\nMerk\t :"+ this.merk +
-                "\nTahun\t : "+ this.tahunPembuatan +
-                "\nNomor\t : "+ this.noPlat +
-                "\nJumlah Penumpang : "+ this.jumlah_penumpang+"\n";
+            return  "\nID\t\t : "+this.id +
+                "\nMerk\t\t : "+ this.merk +
+                "\nTahun\t\t : "+ this.tahunPembuatan +
+                "\nNomor\t\t : "+ this.noPlat +
+                "\nJumlah Penumpang\t : "+ this.jumlah_penumpang+"\n";
         }else{
             return  "\nID\t : "+this.id +
-                "\nMerk\t :"+ this.merk +
+                "\nMerk\t : "+ this.merk +
                 "\nTahun\t : "+ this.tahunPembuatan +
                 "\nNomor\t : "+ this.noPlat +
-                "\nJenis Motor : "+ this.jenis_tak+"\n";
+                "\nJenis Tak\t : "+ this.jenis_tak+"\n";
         }
         
     }

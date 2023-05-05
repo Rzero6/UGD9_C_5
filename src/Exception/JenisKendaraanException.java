@@ -8,8 +8,8 @@ package Exception;
  *
  * @author Msi Modern 14
  */
-public class JenisKendaraanException {
+public class JenisKendaraanException extends Exception {
     public String message(){
-        return "Jenis Kendaraan Hanya Mobil / Motor [!]";
+        return "Pilih Jenis Kendaraan [!]";
     }
 }
