@@ -5,8 +5,11 @@
 package model;
 
 /**
- *
- * @author VICTUS
+ * Nama : Reynold Kunarto 
+ * NPM : 210711015
+ * 
+ * Nama : Febiola Ika Putri Wibowo
+ * NPM : 210711023
  */
 public class Kendaraan {
     private String id;

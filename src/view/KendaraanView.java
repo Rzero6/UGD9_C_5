@@ -5,8 +5,11 @@
 package view;
 package javax.swing;
 /**
- *
- * @author VICTUS
+ * Nama : Reynold Kunarto 
+ * NPM : 210711015
+ * 
+ * Nama : Febiola Ika Putri Wibowo
+ * NPM : 210711023
  */
 
 import javax.swing.JOptionPane;
@@ -15,14 +18,6 @@ import control.KendaraanControl;
 import Exception.IdKendaraanException;
 import Exception.InputKosongException;
 import Exception.JenisKendaraanException;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 public class KendaraanView extends javax.swing.JFrame {
     private String jenis;
@@ -733,6 +728,7 @@ public class KendaraanView extends javax.swing.JFrame {
         
         idInput.setEnabled(false);
         setEnableRadio(false);
+        
         action = "Ubah";
     }//GEN-LAST:event_btnEditActionPerformed
 

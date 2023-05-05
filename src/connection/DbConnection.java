@@ -5,8 +5,11 @@
 package connection;
 
 /**
- *
- * @author VICTUS
+ * Nama : Reynold Kunarto 
+ * NPM : 210711015
+ * 
+ * Nama : Febiola Ika Putri Wibowo
+ * NPM : 210711023
  */
 import java.sql.Connection;
 import java.sql.DriverManager;

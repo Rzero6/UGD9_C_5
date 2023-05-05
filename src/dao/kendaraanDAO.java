@@ -5,8 +5,11 @@
 package dao;
 
 /**
- *
- * @author VICTUS
+ * Nama : Reynold Kunarto 
+ * NPM : 210711015
+ * 
+ * Nama : Febiola Ika Putri Wibowo
+ * NPM : 210711023
  */
 import connection.DbConnection;
 import java.sql.Connection;

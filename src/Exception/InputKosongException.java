@@ -5,8 +5,11 @@
 package Exception;
 
 /**
- *
- * @author Msi Modern 14
+ * Nama : Reynold Kunarto 
+ * NPM : 210711015
+ * 
+ * Nama : Febiola Ika Putri Wibowo
+ * NPM : 210711023
  */
 public class InputKosongException extends Exception {
     public String message(){

@@ -4,6 +4,14 @@
  */
 package control;
 
+/**
+ * Nama : Reynold Kunarto 
+ * NPM : 210711015
+ * 
+ * Nama : Febiola Ika Putri Wibowo
+ * NPM : 210711023
+ */
+
 import dao.kendaraanDAO;
 import java.util.List;
 import model.Kendaraan;
