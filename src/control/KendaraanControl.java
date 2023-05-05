@@ -25,9 +25,7 @@ public class KendaraanControl {
     }
     
     public Kendaraan searchKendaraan(String id){
-        Kendaraan k = null;
-        k = dDao.searchKendaraan(id);
-        return k;
+        return dDao.searchKendaraan(id);
     }
     
     public void updateDataKendaraan(Kendaraan k, String id){
