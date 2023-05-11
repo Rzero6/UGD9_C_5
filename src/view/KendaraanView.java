@@ -18,6 +18,8 @@ import control.KendaraanControl;
 import Exception.IdKendaraanException;
 import Exception.InputKosongException;
 import Exception.JenisKendaraanException;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 public class KendaraanView extends javax.swing.JFrame {
     private String jenis;
@@ -33,12 +35,18 @@ public class KendaraanView extends javax.swing.JFrame {
         initComponents();
         setComponent(false);
         setEditDeleteBtn(false);
+        setLogo();
         kendaraanControl = new KendaraanControl();
         showKendaraan();
     }
-    
+    public void setLogo(){
+        ImageIcon icon = new ImageIcon("src\\assets\\logo.png");
+        Image img = icon.getImage();
+        Image imgscale = img.getScaledInstance(logoLabel.getWidth(), logoLabel.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon scaleIcon = new ImageIcon(imgscale);
+        logoLabel.setIcon(scaleIcon);
+    }
     public void setComponent(boolean value) {
-        idInput.setEnabled(value);
         merkInput.setEnabled(value);
         tahunInput.setEnabled(value);
         noPlatInput.setEnabled(value);
@@ -71,7 +79,7 @@ public class KendaraanView extends javax.swing.JFrame {
     }
 
     public void clearText() {
-        idInput.setText("");
+        idInput.setText("Pilih Mobil atau Motor");
         merkInput.setText("");
         tahunInput.setText("");
         noPlatInput.setText("");
@@ -79,7 +87,7 @@ public class KendaraanView extends javax.swing.JFrame {
         motorInput.setText("");
         mobilInput.setText("");
         
-        txtSearch.setText("");
+        txtSearch.setText("cari berdasarkan id");
     }
     
     public void showKendaraan(){
@@ -114,6 +122,33 @@ public class KendaraanView extends javax.swing.JFrame {
         }
     }
     
+    public void idGen(String jenis){
+        String mobil = "MBL-";
+        String motor = "MTR-";
+        String idmobil;
+        String idmotor;
+        int i;
+
+        if(jenis.equals("Mobil")){
+            i=0;
+            do{
+                i++;
+                idmobil = mobil + i;
+
+            }while(kendaraanControl.searchKendaraan(idmobil)!=null);
+            //method masukin id mobil ke data mobil
+            idInput.setText(idmobil);
+        }else{
+            i=0;
+            do{
+                i++;
+                idmotor = motor + i;
+            }while(kendaraanControl.searchKendaraan(idmotor)!=null);
+            //method masukin idmotor ke data motor
+            idInput.setText(idmotor);
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -137,6 +172,7 @@ public class KendaraanView extends javax.swing.JFrame {
         kelompokLabel = new javax.swing.JLabel();
         npm1Label = new javax.swing.JLabel();
         npm2Label = new javax.swing.JLabel();
+        logoLabel = new javax.swing.JLabel();
         containerLabel = new javax.swing.JPanel();
         containerInputId = new javax.swing.JPanel();
         idLabel = new javax.swing.JLabel();
@@ -189,17 +225,24 @@ public class KendaraanView extends javax.swing.JFrame {
         });
 
         txtSearch.setBackground(new java.awt.Color(255, 255, 255));
-        txtSearch.setForeground(new java.awt.Color(0, 0, 0));
+        txtSearch.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        txtSearch.setForeground(new java.awt.Color(153, 153, 153));
         txtSearch.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtSearch.setText("cari berdasarkan id");
+        txtSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtSearchMouseClicked(evt);
+            }
+        });
         txtSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSearchActionPerformed(evt);
             }
         });
 
-        btnSearch.setBackground(new java.awt.Color(204, 204, 204));
+        btnSearch.setBackground(new java.awt.Color(51, 51, 255));
         btnSearch.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnSearch.setForeground(new java.awt.Color(0, 0, 0));
+        btnSearch.setForeground(new java.awt.Color(255, 255, 255));
         btnSearch.setText("Cari");
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -207,9 +250,9 @@ public class KendaraanView extends javax.swing.JFrame {
             }
         });
 
-        btnEdit.setBackground(new java.awt.Color(204, 204, 204));
+        btnEdit.setBackground(new java.awt.Color(255, 153, 51));
         btnEdit.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnEdit.setForeground(new java.awt.Color(0, 0, 0));
+        btnEdit.setForeground(new java.awt.Color(255, 255, 255));
         btnEdit.setText("Ubah");
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -276,6 +319,8 @@ public class KendaraanView extends javax.swing.JFrame {
         npm2Label.setForeground(new java.awt.Color(0, 0, 0));
         npm2Label.setText("210711023");
 
+        logoLabel.setBackground(new java.awt.Color(0, 0, 0));
+
         javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
         headerPanel.setLayout(headerPanelLayout);
         headerPanelLayout.setHorizontalGroup(
@@ -289,7 +334,9 @@ public class KendaraanView extends javax.swing.JFrame {
                 .addComponent(npm2Label)
                 .addGap(87, 87, 87)
                 .addComponent(titleContent)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(logoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         headerPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {npm1Label, npm2Label});
@@ -306,9 +353,11 @@ public class KendaraanView extends javax.swing.JFrame {
                             .addComponent(npm1Label)
                             .addComponent(npm2Label)))
                     .addGroup(headerPanelLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(titleContent)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(7, 7, 7)
+                        .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(logoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(titleContent))))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout allPanelLayout = new javax.swing.GroupLayout(allPanel);
@@ -332,14 +381,22 @@ public class KendaraanView extends javax.swing.JFrame {
                 .addGap(10, 10, 10))
         );
 
+        containerLabel.setBackground(new java.awt.Color(255, 255, 255));
         containerLabel.setForeground(new java.awt.Color(0, 0, 0));
         containerLabel.setPreferredSize(new java.awt.Dimension(1280, 720));
 
+        containerInputId.setBackground(new java.awt.Color(255, 255, 255));
         containerInputId.setPreferredSize(new java.awt.Dimension(300, 65));
 
         idLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        idLabel.setForeground(new java.awt.Color(0, 0, 0));
         idLabel.setText("ID Kendaraan");
 
+        idInput.setBackground(new java.awt.Color(255, 255, 255));
+        idInput.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        idInput.setForeground(new java.awt.Color(51, 51, 51));
+        idInput.setText("Pilih Mobil atau Motor");
+        idInput.setEnabled(false);
         idInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 idInputActionPerformed(evt);
@@ -355,8 +412,8 @@ public class KendaraanView extends javax.swing.JFrame {
                 .addGroup(containerInputIdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(containerInputIdLayout.createSequentialGroup()
                         .addComponent(idLabel)
-                        .addGap(0, 206, Short.MAX_VALUE))
-                    .addComponent(idInput))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(idInput, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE))
                 .addContainerGap())
         );
         containerInputIdLayout.setVerticalGroup(
@@ -369,11 +426,16 @@ public class KendaraanView extends javax.swing.JFrame {
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
+        containerInputMerk.setBackground(new java.awt.Color(255, 255, 255));
+        containerInputMerk.setForeground(new java.awt.Color(0, 0, 0));
         containerInputMerk.setPreferredSize(new java.awt.Dimension(300, 65));
 
         merkLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        merkLabel.setForeground(new java.awt.Color(0, 0, 0));
         merkLabel.setText("Merk");
 
+        merkInput.setBackground(new java.awt.Color(255, 255, 255));
+        merkInput.setForeground(new java.awt.Color(0, 0, 0));
         merkInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 merkInputActionPerformed(evt);
@@ -403,11 +465,16 @@ public class KendaraanView extends javax.swing.JFrame {
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
+        containerInputTahun.setBackground(new java.awt.Color(255, 255, 255));
+        containerInputTahun.setForeground(new java.awt.Color(0, 0, 0));
         containerInputTahun.setPreferredSize(new java.awt.Dimension(300, 65));
 
         tahunLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        tahunLabel.setForeground(new java.awt.Color(0, 0, 0));
         tahunLabel.setText("Tahun Pembuatan");
 
+        tahunInput.setBackground(new java.awt.Color(255, 255, 255));
+        tahunInput.setForeground(new java.awt.Color(0, 0, 0));
         tahunInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tahunInputActionPerformed(evt);
@@ -437,11 +504,16 @@ public class KendaraanView extends javax.swing.JFrame {
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
+        containerInputNoPlat.setBackground(new java.awt.Color(255, 255, 255));
+        containerInputNoPlat.setForeground(new java.awt.Color(0, 0, 0));
         containerInputNoPlat.setPreferredSize(new java.awt.Dimension(300, 65));
 
         noPlatLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        noPlatLabel.setForeground(new java.awt.Color(0, 0, 0));
         noPlatLabel.setText("No Plat");
 
+        noPlatInput.setBackground(new java.awt.Color(255, 255, 255));
+        noPlatInput.setForeground(new java.awt.Color(0, 0, 0));
         noPlatInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 noPlatInputActionPerformed(evt);
@@ -471,8 +543,12 @@ public class KendaraanView extends javax.swing.JFrame {
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
+        containerOptionMobil.setBackground(new java.awt.Color(255, 255, 255));
+        containerOptionMobil.setForeground(new java.awt.Color(0, 0, 0));
+
         buttonGroupJenis.add(mobilRBtn);
         mobilRBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        mobilRBtn.setForeground(new java.awt.Color(0, 0, 0));
         mobilRBtn.setText("Mobil");
         mobilRBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -480,12 +556,15 @@ public class KendaraanView extends javax.swing.JFrame {
             }
         });
 
+        mobilInput.setBackground(new java.awt.Color(255, 255, 255));
+        mobilInput.setForeground(new java.awt.Color(0, 0, 0));
         mobilInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mobilInputActionPerformed(evt);
             }
         });
 
+        penumpangLabel.setForeground(new java.awt.Color(102, 102, 102));
         penumpangLabel.setText("Jumlah Penumpang");
 
         javax.swing.GroupLayout containerOptionMobilLayout = new javax.swing.GroupLayout(containerOptionMobil);
@@ -515,12 +594,16 @@ public class KendaraanView extends javax.swing.JFrame {
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
+        showDataPanel.setBackground(new java.awt.Color(255, 255, 255));
+
         showDataTextAreaMobil.setEditable(false);
+        showDataTextAreaMobil.setBackground(new java.awt.Color(204, 204, 204));
         showDataTextAreaMobil.setColumns(20);
         showDataTextAreaMobil.setRows(5);
         jScrollPane3.setViewportView(showDataTextAreaMobil);
 
         showDataTextAreaMotor.setEditable(false);
+        showDataTextAreaMotor.setBackground(new java.awt.Color(204, 204, 204));
         showDataTextAreaMotor.setColumns(20);
         showDataTextAreaMotor.setRows(5);
         showDataTextAreaMotor.setPreferredSize(null);
@@ -542,8 +625,12 @@ public class KendaraanView extends javax.swing.JFrame {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
         );
 
+        containerOptionMotor.setBackground(new java.awt.Color(255, 255, 255));
+        containerOptionMotor.setForeground(new java.awt.Color(0, 0, 0));
+
         buttonGroupJenis.add(motorRBtn);
         motorRBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        motorRBtn.setForeground(new java.awt.Color(0, 0, 0));
         motorRBtn.setText("Motor");
         motorRBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -551,12 +638,15 @@ public class KendaraanView extends javax.swing.JFrame {
             }
         });
 
+        motorInput.setBackground(new java.awt.Color(255, 255, 255));
+        motorInput.setForeground(new java.awt.Color(0, 0, 0));
         motorInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 motorInputActionPerformed(evt);
             }
         });
 
+        takLabel.setForeground(new java.awt.Color(102, 102, 102));
         takLabel.setText("Jenis Tak");
 
         javax.swing.GroupLayout containerOptionMotorLayout = new javax.swing.GroupLayout(containerOptionMotor);
@@ -619,34 +709,29 @@ public class KendaraanView extends javax.swing.JFrame {
         containerLabelLayout.setHorizontalGroup(
             containerLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(containerLabelLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(containerLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(containerInputId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(containerInputMerk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(containerInputTahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(containerInputNoPlat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(containerLabelLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(mobilLabel)))
-                .addGap(75, 75, 75)
-                .addGroup(containerLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, containerLabelLayout.createSequentialGroup()
-                        .addComponent(motorLabel)
-                        .addContainerGap(299, Short.MAX_VALUE))
-                    .addGroup(containerLabelLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(containerLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(containerLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(containerOptionMotor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(containerOptionMobil, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(containerInputId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(containerInputMerk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(containerInputTahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(containerInputNoPlat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(containerLabelLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(mobilLabel)))
+                        .addGap(75, 75, 75)
+                        .addGroup(containerLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(motorLabel)
+                            .addComponent(containerOptionMotor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(containerOptionMobil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(containerLabelLayout.createSequentialGroup()
                                 .addGap(66, 66, 66)
                                 .addComponent(btnSave)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnCancel)))
-                        .addContainerGap())))
-            .addGroup(containerLabelLayout.createSequentialGroup()
-                .addComponent(showDataPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                                .addComponent(btnCancel))))
+                    .addComponent(showDataPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         containerLabelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {containerInputId, containerInputMerk, containerInputNoPlat, containerInputTahun});
@@ -689,17 +774,15 @@ public class KendaraanView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(containerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 745, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 15, Short.MAX_VALUE))
             .addComponent(allPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(containerLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(allPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(containerLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
+                .addComponent(containerLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -862,6 +945,7 @@ public class KendaraanView extends javax.swing.JFrame {
         mobilInput.setEnabled(false);
         mobilInput.setText("");
         jenis = "Motor";
+        idGen(jenis);
     }//GEN-LAST:event_motorRBtnActionPerformed
 
     private void mobilInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mobilInputActionPerformed
@@ -875,6 +959,7 @@ public class KendaraanView extends javax.swing.JFrame {
         motorInput.setEnabled(false);
         motorInput.setText("");
         jenis = "Mobil";
+        idGen(jenis);
     }//GEN-LAST:event_mobilRBtnActionPerformed
 
     private void noPlatInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noPlatInputActionPerformed
@@ -892,6 +977,11 @@ public class KendaraanView extends javax.swing.JFrame {
     private void idInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idInputActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_idInputActionPerformed
+
+    private void txtSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSearchMouseClicked
+        // TODO add your handling code here:
+        txtSearch.setText("");
+    }//GEN-LAST:event_txtSearchMouseClicked
 
     /**
      * @param args the command line arguments
@@ -954,6 +1044,7 @@ public class KendaraanView extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel kelompokLabel;
+    private javax.swing.JLabel logoLabel;
     private javax.swing.JTextField merkInput;
     private javax.swing.JLabel merkLabel;
     private javax.swing.JTextField mobilInput;
