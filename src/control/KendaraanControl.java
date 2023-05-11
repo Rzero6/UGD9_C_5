@@ -23,6 +23,15 @@ public class KendaraanControl {
         dDao.insertKendaraan(k);
     }
     
+    public int getDataCount(String jenis){
+        List<Kendaraan> dataKendaraan = dDao.showKendaraan(jenis);
+        return dataKendaraan.size();
+    }
+    
+    public Kendaraan getLasKendaraan(String jenis){
+        return dDao.getLastData(jenis);
+    }
+    
     public String showDataKendaraan(String jenis){
         List<Kendaraan> dataKendaraan = dDao.showKendaraan(jenis);
         String kendaraanString = "";

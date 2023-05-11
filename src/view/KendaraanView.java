@@ -127,23 +127,27 @@ public class KendaraanView extends javax.swing.JFrame {
         String motor = "MTR-";
         String idmobil;
         String idmotor;
+        String temp;
         int i;
 
         if(jenis.equals("Mobil")){
-            i=0;
-            do{
+            temp = kendaraanControl.getLasKendaraan(jenis).getId();
+            i = Integer.parseInt(temp.replaceAll("[^\\d]", ""))+1;
+            idmobil=mobil+i;
+            while(kendaraanControl.searchKendaraan(idmobil)!=null){
                 i++;
-                idmobil = mobil + i;
-
-            }while(kendaraanControl.searchKendaraan(idmobil)!=null);
+                idmobil=mobil+i;
+            }
             //method masukin id mobil ke data mobil
             idInput.setText(idmobil);
         }else{
-            i=0;
-            do{
+            temp = kendaraanControl.getLasKendaraan(jenis).getId();
+            i = Integer.parseInt(temp.replaceAll("[^\\d]", ""))+1;
+            idmotor=motor+i;
+            while(kendaraanControl.searchKendaraan(idmotor)!=null){
                 i++;
-                idmotor = motor + i;
-            }while(kendaraanControl.searchKendaraan(idmotor)!=null);
+                idmotor=motor+i;
+            }
             //method masukin idmotor ke data motor
             idInput.setText(idmotor);
         }
@@ -173,6 +177,7 @@ public class KendaraanView extends javax.swing.JFrame {
         npm1Label = new javax.swing.JLabel();
         npm2Label = new javax.swing.JLabel();
         logoLabel = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         containerLabel = new javax.swing.JPanel();
         containerInputId = new javax.swing.JPanel();
         idLabel = new javax.swing.JLabel();
@@ -305,7 +310,7 @@ public class KendaraanView extends javax.swing.JFrame {
         titleContent.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         titleContent.setForeground(new java.awt.Color(0, 0, 0));
         titleContent.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleContent.setText("OBJECT PERSISTENCE 1");
+        titleContent.setText("RENTAL KENDARAAN NEGARA");
 
         kelompokLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         kelompokLabel.setForeground(new java.awt.Color(0, 0, 0));
@@ -321,6 +326,10 @@ public class KendaraanView extends javax.swing.JFrame {
 
         logoLabel.setBackground(new java.awt.Color(0, 0, 0));
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 8)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("By Lala Autos");
+
         javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
         headerPanel.setLayout(headerPanelLayout);
         headerPanelLayout.setHorizontalGroup(
@@ -332,11 +341,16 @@ public class KendaraanView extends javax.swing.JFrame {
                     .addComponent(npm1Label, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(npm2Label)
-                .addGap(87, 87, 87)
+                .addGap(45, 45, 45)
                 .addComponent(titleContent)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(logoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerPanelLayout.createSequentialGroup()
+                        .addComponent(logoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         headerPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {npm1Label, npm2Label});
@@ -344,19 +358,19 @@ public class KendaraanView extends javax.swing.JFrame {
         headerPanelLayout.setVerticalGroup(
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(titleContent)
                     .addGroup(headerPanelLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(kelompokLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(npm1Label)
                             .addComponent(npm2Label)))
                     .addGroup(headerPanelLayout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(logoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(titleContent))))
+                        .addComponent(logoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1)))
                 .addContainerGap())
         );
 
@@ -775,14 +789,14 @@ public class KendaraanView extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(allPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(containerLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
+            .addComponent(containerLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(allPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(containerLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
+                .addComponent(containerLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1041,6 +1055,7 @@ public class KendaraanView extends javax.swing.JFrame {
     private javax.swing.JPanel headerPanel;
     private javax.swing.JTextField idInput;
     private javax.swing.JLabel idLabel;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel kelompokLabel;

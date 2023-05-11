@@ -179,4 +179,37 @@ public class kendaraanDAO {
 
         dbCon.closeConnection();
     }
+    
+    public Kendaraan getLastData(String jenis){
+        con = dbCon.makeConnection();
+        String jenisCode;
+        if(jenis.equals("Mobil")){
+            jenisCode = "MBL-";
+        }else{
+            jenisCode = "MTR-";
+        }
+        String sql = "SELECT * FROM kendaraan WHERE id LIKE '"+jenisCode+"%' ORDER BY id DESC LIMIT 1";
+        Kendaraan k = null;
+        try{
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            if (rs.next()) {
+                    k = new Kendaraan(
+                            rs.getString("id"),
+                            rs.getString("merk"),
+                            rs.getString("jenis"),
+                            rs.getInt("tahunPembuatan"),
+                            rs.getString("noPlat"),
+                            rs.getInt("jumlah_penumpang"),
+                            rs.getString("jenis_tak"));
+            }
+            rs.close();
+            statement.close();
+        }catch (Exception e){
+            System.out.println("Error reading database...");
+            System.out.println(e);
+        }
+        dbCon.closeConnection();
+        return k;
+    }
 }
