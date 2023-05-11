@@ -795,7 +795,7 @@ public class KendaraanView extends javax.swing.JFrame {
         mobilInput.setEnabled(false);
         setEnableRadio(true);
         clearText();
-        txtSearch.setText("");
+        txtSearch.setText("cari berdasarkan id");
         action = "Tambah";
     }//GEN-LAST:event_btnAddActionPerformed
 
