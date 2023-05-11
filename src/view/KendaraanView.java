@@ -23,6 +23,8 @@ import javax.swing.ImageIcon;
 
 public class KendaraanView extends javax.swing.JFrame {
     private String jenis;
+    private static int idMaxMotor;
+    private static int idMaxMobil;
 
     /**
      * Creates new form KendaraanView
@@ -38,6 +40,20 @@ public class KendaraanView extends javax.swing.JFrame {
         setLogo();
         kendaraanControl = new KendaraanControl();
         showKendaraan();
+        setIdDefault();
+    }
+    
+    public void setIdDefault(){
+        if(kendaraanControl.getLasKendaraan("Motor") == null){
+            idMaxMotor = 1;
+        }else{
+            idMaxMotor = Integer.parseInt(kendaraanControl.getLasKendaraan("Motor").getId().replaceAll("[^\\d]", ""))+1;
+        }
+        if(kendaraanControl.getLasKendaraan("Mobil") == null){
+            idMaxMobil = 1;  
+        }else{
+            idMaxMobil = Integer.parseInt(kendaraanControl.getLasKendaraan("Mobil").getId().replaceAll("[^\\d]", ""))+1;
+        }
     }
     public void setLogo(){
         ImageIcon icon = new ImageIcon("src\\assets\\logo.png");
@@ -127,40 +143,12 @@ public class KendaraanView extends javax.swing.JFrame {
         String motor = "MTR-";
         String idmobil;
         String idmotor;
-        String temp;
-        int i;
 
         if(jenis.equals("Mobil")){
-            if(kendaraanControl.getLasKendaraan(jenis)==null){
-                i=1;
-                idmobil = mobil + i;
-            }else{
-                temp = kendaraanControl.getLasKendaraan(jenis).getId();
-                i = Integer.parseInt(temp.replaceAll("[^\\d]", ""))+1;
-                idmobil=mobil+i;
-                while(kendaraanControl.searchKendaraan(idmobil)!=null){
-                    i++;
-                    idmobil=mobil+i;
-                }
-            }
-            
-            //method masukin id mobil ke data mobil
+            idmobil = mobil + idMaxMobil;
             idInput.setText(idmobil);
         }else{
-            if(kendaraanControl.getLasKendaraan(jenis)==null){
-                i=1;
-                idmotor = motor + i;
-            }else{
-                temp = kendaraanControl.getLasKendaraan(jenis).getId();
-                i = Integer.parseInt(temp.replaceAll("[^\\d]", ""))+1;
-                idmotor=motor+i;
-                while(kendaraanControl.searchKendaraan(idmotor)!=null){
-                    i++;
-                    idmotor=motor+i;
-                }
-            }
-            
-            //method masukin idmotor ke data motor
+            idmotor = motor + idMaxMotor;
             idInput.setText(idmotor);
         }
     }
@@ -917,11 +905,13 @@ public class KendaraanView extends javax.swing.JFrame {
                         inputKosongException(2);
                         if(mobilRBtn.isSelected()){
                             jenis = "mobil";
+                            idMaxMobil++;
                         }else{
                             jenis = "motor";
+                            idMaxMotor++;
                         }
                         Kendaraan k = null;
-                        
+                   
                         if(jenis.equalsIgnoreCase("mobil")){
                             k = new Kendaraan(idInput.getText(),
                                 merkInput.getText(),jenis , 
@@ -941,9 +931,9 @@ public class KendaraanView extends javax.swing.JFrame {
                         
                         if(action.equals("Tambah")){
                                 kendaraanControl.insertDataKendaraan(k);
-                            }else{
-                                kendaraanControl.updateDataKendaraan(k,idInput.getText());
-                            }
+                        }else{
+                            kendaraanControl.updateDataKendaraan(k,idInput.getText());
+                        }
                         clearText();
                         showKendaraan();
                         setComponent(false);
