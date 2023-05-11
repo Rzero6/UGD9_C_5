@@ -131,23 +131,35 @@ public class KendaraanView extends javax.swing.JFrame {
         int i;
 
         if(jenis.equals("Mobil")){
-            temp = kendaraanControl.getLasKendaraan(jenis).getId();
-            i = Integer.parseInt(temp.replaceAll("[^\\d]", ""))+1;
-            idmobil=mobil+i;
-            while(kendaraanControl.searchKendaraan(idmobil)!=null){
-                i++;
+            if(kendaraanControl.getLasKendaraan(jenis)==null){
+                i=1;
+                idmobil = mobil + i;
+            }else{
+                temp = kendaraanControl.getLasKendaraan(jenis).getId();
+                i = Integer.parseInt(temp.replaceAll("[^\\d]", ""))+1;
                 idmobil=mobil+i;
+                while(kendaraanControl.searchKendaraan(idmobil)!=null){
+                    i++;
+                    idmobil=mobil+i;
+                }
             }
+            
             //method masukin id mobil ke data mobil
             idInput.setText(idmobil);
         }else{
-            temp = kendaraanControl.getLasKendaraan(jenis).getId();
-            i = Integer.parseInt(temp.replaceAll("[^\\d]", ""))+1;
-            idmotor=motor+i;
-            while(kendaraanControl.searchKendaraan(idmotor)!=null){
-                i++;
+            if(kendaraanControl.getLasKendaraan(jenis)==null){
+                i=1;
+                idmotor = motor + i;
+            }else{
+                temp = kendaraanControl.getLasKendaraan(jenis).getId();
+                i = Integer.parseInt(temp.replaceAll("[^\\d]", ""))+1;
                 idmotor=motor+i;
+                while(kendaraanControl.searchKendaraan(idmotor)!=null){
+                    i++;
+                    idmotor=motor+i;
+                }
             }
+            
             //method masukin idmotor ke data motor
             idInput.setText(idmotor);
         }
@@ -286,11 +298,11 @@ public class KendaraanView extends javax.swing.JFrame {
                 .addComponent(btnEdit)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDelete)
-                .addGap(130, 130, 130)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSearch)
-                .addGap(14, 14, 14))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         actionPanelLayout.setVerticalGroup(
             actionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -789,7 +801,7 @@ public class KendaraanView extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(allPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(containerLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
+            .addComponent(containerLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
